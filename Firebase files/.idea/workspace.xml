@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b71a5e1f-88bf-4296-b1a6-67a38c39fd4f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front_end_up/secret_santa/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front_end_up/secret_santa/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front_end_up/secret_santa/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front_end_up/secret_santa/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front_end_up/secret_santa/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front_end_up/secret_santa/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front_end_up/secret_santa/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front_end_up/secret_santa/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front_end_up/secret_santa/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front_end_up/secret_santa/src/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+            <state relative-caret-position="153">
+              <caret line="14" column="46" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -51,8 +55,7 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="704" />
-    <option name="y" value="-8" />
+    <option name="x" value="416" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -62,6 +65,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -73,13 +77,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="10.15.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../front_end_up" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -129,19 +132,21 @@
       <workItem from="1555974806620" duration="8344000" />
       <workItem from="1555985489472" duration="639000" />
       <workItem from="1556045332505" duration="652000" />
+      <workItem from="1556049091003" duration="1565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15429000" />
+    <option name="totallyTimeSpent" value="16994000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="npm" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17913593" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
@@ -178,8 +183,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/functions/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        <state relative-caret-position="153">
+          <caret line="14" column="46" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="46" />
         </state>
       </provider>
     </entry>

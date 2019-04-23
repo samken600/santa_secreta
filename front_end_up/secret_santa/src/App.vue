@@ -17,6 +17,19 @@
 
 <script>
 import firebase from 'firebase';
+
+let config = {
+	apiKey: "AIzaSyAUT063UC7cTHbd4fBnu3lDs7CYrRWawhA",
+	authDomain: "santa-secreta.firebaseapp.com",
+	databaseURL: "https://santa-secreta.firebaseio.com/",
+	projectId: "santa-secreta",
+	storageBucket: "santa-secreta.appspot.com",
+	messagingSenderId: "602714974736"
+};
+
+firebase.initializeApp(config);
+let functions = firebase.app().functions('europe-west1');
+
 export default {
 	name: 'app',
 	data () {
@@ -33,21 +46,21 @@ export default {
 		take: function(hold){
 			this.input_values = hold;
 		},
-		submit: function(uemail, uusername){
-			let login = firebase.functions().httpsCallable('login');
-			login({email: 'uemail', username: 'uusername'})
+		submit: function(){
+			let uemail = document.getElementById('email').value;
+			let uusername = document.getElementById('username').value;
+
+			let login = functions.httpsCallable('login');
+			login({email: uemail, username: uusername})
 			.then(function(result){
 				console.log(result);
 			}).catch(function(error){
 				console.error(error);
 			});
 		},
-
 	}
-
 }
 </script>
 
 <style>
-
 </style>
