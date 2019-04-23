@@ -32,7 +32,8 @@ exports.login = functions.region('europe-west1').https.onCall(async (data, conte
             if(emailQuerySnapshot.size === 0 && usernameQuerySnapshot.size === 0) {
                 const doc = await users.add({
                     email: email,
-                    username: username
+                    username: username,
+                    lists: []
                 });
 
                 userId = doc.id;
@@ -49,14 +50,55 @@ exports.login = functions.region('europe-west1').https.onCall(async (data, conte
     }
 });
 
-/*
+function shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+
 exports.create_list = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const userId = data.userId;
+    const people = data.people;
+    const name = data.name;
 
+    const users = db.collection('users');
+    const lists = db.collection('lists');
 
+    let persons = shuffle(people);
+
+    try {
+        const doc = await lists.add({
+            name: name,
+            persons: persons
+        });
+
+        await users.doc(userId).update({
+            lists: firebase.firestore.FieldValue.arrayUnion(doc.id)
+        });
+
+        return doc.id;
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 });
 
+/*
 exports.delete_list = functions.region('europe-west1').https.onCall(async (data, context) => {
-
 
 });
 
