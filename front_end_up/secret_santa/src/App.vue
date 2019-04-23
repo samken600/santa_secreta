@@ -1,14 +1,14 @@
 <template>
-  <div id="app">
+  <div v-if="!loggedIn" id="app">
     <h1 class="greeting">{{greeting}}</h1>
     <form id="login">
       <label for="email">Email</label>
       <input type="text" id="email" name="user-email">
       <label for="username">Username</label>
       <input type="text" id="username" name="user-username">
-      <input type="submit" id="submit-button" value="Submit" @click="submit">
+      <input type="submit" id="submit-button" value="Log in" @click="submit">
     </form>
-    <p>{{input_values}}</p>
+    <p v-if="debug">{{userID}}</p>
   </div>
 </template>
 
@@ -31,15 +31,15 @@ export default {
   name: "app",
   data() {
     return {
-      greeting: "Log in to Secret Santa"
+      greeting: "Log in to Secret Santa",
+      userID: "",
+      debug: true,
+      loggedIn: false
     };
   },
   methods: {
     inc: function() {
       this.value++;
-    },
-    take: function(hold) {
-      this.input_values = hold;
     },
     submit: function() {
       let uemail = document.getElementById("email").value;
@@ -49,6 +49,7 @@ export default {
       login({ email: uemail, username: uusername })
         .then(function(result) {
           console.log(result);
+          this.userID = String(result);
         })
         .catch(function(error) {
           console.error(error);
