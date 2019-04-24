@@ -48,15 +48,14 @@ export default {
 
       let login = functions.httpsCallable("login");
       login({ email: uemail, username: uusername })
-        .then(function(result) {
+        .then((result) => {
           console.log(result);
-          this.userID = String(result);
+		  this.userID = result;
+		  if(result != null) this.$router.push("log");
         })
         .catch(function(error) {
           console.error(error);
         });
-
-      this.$router.push("log");
     }
   }
 };

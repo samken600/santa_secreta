@@ -3,11 +3,10 @@ import App from "./App.vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
-const Main = { template: "<div><h1>CRAZY Main</h1></div>" };
-const Log = { template: '<div><p>"userID"<p></div>' };
+const Log = { template: "<div><h1>CRAZY Log</h1></div>" };
 
 const routes = [
-  { path: "/home", component: App },
+  { path: "/", component: App },
   { path: "/log", component: Log }
 ];
 
