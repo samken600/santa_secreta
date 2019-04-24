@@ -1,12 +1,12 @@
 import Vue from "vue";
-import App from "./App.vue";
+import Login from "./Login.vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const Log = { template: "<div><h1>CRAZY Log</h1></div>" };
 
 const routes = [
-  { path: "/", component: App },
+  { path: "/", component: Login },
   { path: "/log", component: Log }
 ];
 
@@ -17,7 +17,7 @@ const router = new VueRouter({
 const app = new Vue({
   router,
   data: {
-    userID: "Ther"
+    userID: ""
   }
 }).$mount("#app");
 

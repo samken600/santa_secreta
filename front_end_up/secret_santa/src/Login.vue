@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loggedIn" id="login-app">
+  <div v-if="!loggedIn" id="login">
     <h1 class="greeting">{{greeting}}</h1>
     <form id="login">
       <label for="email">Email</label>
@@ -29,7 +29,7 @@ firebase.initializeApp(config);
 let functions = firebase.app().functions("europe-west1");
 
 export default {
-  name: "app",
+  name: "login",
   data() {
     return {
       greeting: "Log in to Secret Santa",
