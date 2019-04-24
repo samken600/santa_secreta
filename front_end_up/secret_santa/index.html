@@ -10,9 +10,19 @@
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-functions.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <div id="app">
+      <h1>
+        IN APP
+      </h1>
+      <div id="banner">
+        <router-link to="/home">Go to home</router-link>
+        <router-link to="/log">Go to log</router-link>
+      </div>
+      <router-view></router-view>
+    </div>
 
-    <div id="app"></div>
-    <div id="list">{{ title }}</div>
     <script src="/dist/build.js"></script>
     <script></script>
   </body>
