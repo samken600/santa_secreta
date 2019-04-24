@@ -34,9 +34,9 @@ export default {
   data() {
     return {
       greeting: "Log in to Secret Santa",
-      userID: "",
       debug: true,
-      loggedIn: false
+      loggedIn: false,
+      userID: "empty"
     };
   },
   methods: {
@@ -56,6 +56,7 @@ export default {
         .catch(function(error) {
           console.error(error);
         });
+
       this.$router.push("log");
     }
   }
