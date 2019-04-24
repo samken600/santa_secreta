@@ -10,7 +10,6 @@
       <input type="submit" id="submit-button" value="Log in" @click="submit">
       <!-- </router-link> -->
     </form>
-    <p v-if="debug">{{userID}}</p>
   </div>
 </template>
 
