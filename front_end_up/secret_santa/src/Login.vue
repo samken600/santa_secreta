@@ -27,6 +27,7 @@ let config = {
 
 firebase.initializeApp(config);
 let functions = firebase.app().functions("europe-west1");
+let login = functions.httpsCallable("login");
 
 export default {
   name: "login",
@@ -46,14 +47,14 @@ export default {
       let uemail = document.getElementById("email").value;
       let uusername = document.getElementById("username").value;
 
-      let login = functions.httpsCallable("login");
       login({ email: uemail, username: uusername })
         .then((result) => {
           console.log(result);
-		  this.userID = result;
-		  if(result != null) this.$router.push("log");
+          // this.userID = result;
+          // if(result != null) this.$router.push({path: "log"});
         })
         .catch(function(error) {
+          console.error("Error!");
           console.error(error);
         });
     }

@@ -43,7 +43,6 @@ exports.login = functions.region('europe-west1').https.onCall(async (data, conte
         }
         return userId;
 
-
     } catch (e) {
         console.error(e);
         return null;
