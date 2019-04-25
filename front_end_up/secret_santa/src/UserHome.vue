@@ -2,41 +2,51 @@
   <div>
     <h1>{{username}}'s Home</h1>
     <p>{{userID}}</p>
-    <div id = "list" v-if="ShowList == false" v-for="list in RealList">
-      <h3 class="ListTitle">{{list.name}}</h3>
-      <p class ="ListPerson" v-for="person in list.persons">{{person}}</p>
+    <div id="list" v-for="list in RealList" :key="list.name">
+      <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
+      <p class="ListPerson" v-for="person in list.persons" :key="person">{{person}}</p>
     </div>
     <div v-if="ShowList == true">
-      <h3>
-        {{ PresentList }}
-      </h3>
+      <h3>{{ PresentList }}</h3>
     </div>
-    <button id=add v-on:click="add">
-      +
-    </button>
+    <button id="add" v-on:click="add">+</button>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "userhome",
   data() {
     return {
       RealList: [
-        {name: 'Fun List', persons: ['sam', 'mike', 'ala']},
-        {name: 'Bad list', persons: ['sam1', 'sam2']},
-        {name: 'awesome list', persons: ['jacob', "jacob's friend", "jacob's other friend", "steve", "pikachu"]},
+        { name: "Fun List", persons: ["sam", "mike", "ala"] },
+        { name: "Bad list", persons: ["sam1", "sam2"] },
+        {
+          name: "awesome list",
+          persons: [
+            "jacob",
+            "jacob's friend",
+            "jacob's other friend",
+            "steve",
+            "pikachu"
+          ]
+        }
       ],
       ShowList: false,
-      PresentList: 'THIS LIST',
+      PresentList: "THIS LIST"
     };
   },
-  methods:{
-    add: function(){
+  methods: {
+    add: function() {
       console.log(this.userID);
-      this.RealList.push({name: 'Fun List', persons: ['sam', 'mike', 'ala']})
+      this.RealList.push({
+        name: "List name",
+        persons: ["sam", "mike", "ala"]
+      });
       //use this function to to add to list
+    },
+    debug: function() {
+      console.log("debug");
     }
   },
   props: ["userID", "username"]

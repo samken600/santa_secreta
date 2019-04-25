@@ -6,9 +6,11 @@ body {
   box-sizing: border-box;
   border-style: solid;
   border-color: blue;
+  background-color: white;
 }
 .ListTitle {
   padding-left: 10px;
+  width: 100%;
 }
 .ListPerson {
   color: green;
