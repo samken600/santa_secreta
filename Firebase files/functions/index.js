@@ -96,11 +96,38 @@ exports.create_list = functions.region('europe-west1').https.onCall(async (data,
     }
 });
 
-/*
+
 exports.delete_list = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const userId = data.userId;
+    const listId = data.listId;
+
+    const users = db.collection('users');
+    const lists = db.collection('lists');
+
+    try {
+        await lists.doc(listId).delete().then(function () {
+            console.log("List deleted from database");
+        }).catch(function (error) {
+            console.error("Error removing list: ", error);
+        })
+
+        await users.doc(userId).update({
+            lists: firebase.firestore.FieldValue.arrayRemove(listId)
+        }).then(function () {
+            console.log("List reference removed from user")
+        }).catch(function (error) {
+            console.error("Error removing list reference: ", error);
+        });
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+
 
 });
 
+/*
 exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (data, context) => {
 
 });
