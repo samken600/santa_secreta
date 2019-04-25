@@ -103,6 +103,20 @@ exports.delete_list = functions.region('europe-west1').https.onCall(async (data,
 
 exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (data, context) => {
 
+});
+
+exports.get_list = functions.region('europe-west1').https.onCall(async (data, context) => {
 
 });
+
+exports.add_person = functions.region('europe-west1').https.onCall(async (data, context) => {
+
+});
+
+exports.remove_person = functions.region('europe-west1').https.onCall(async (data, context) => {
+
+});
+
+
+Everyone in list must be unique (unique name)
 */

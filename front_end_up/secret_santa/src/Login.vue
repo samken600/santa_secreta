@@ -46,7 +46,7 @@ export default {
         .then((result) => {
           this.userID = result["data"]; //this is the returned userID
           console.log(this.userID);
-          if (result != null) this.$router.push({name: "home", params: {userID: this.userID}});
+          if (result != null) this.$router.push({name: "home", params: {userID: this.userID, username: InputUsername}});
         })
         .catch(function(error) {
           console.error("Error!");

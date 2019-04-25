@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>User home</h1>
+    <h1>{{username}}'s Home</h1>
     {{userID}}
+
   </div>
 </template>
 
@@ -9,6 +10,9 @@
 
 export default {
   name: "userhome",
-  props: ['userID']
+  props: ['userID', 'username']
 }
+
 </script>
+
+<!-- This is how you comment html -->
