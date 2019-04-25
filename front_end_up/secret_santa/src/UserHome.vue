@@ -1,7 +1,14 @@
 <template>
   <div>
     <h1>User home</h1>
-    <h2>THESSSSS</h2>
+    {{userID}}
   </div>
 </template>
 
+<script>
+
+export default {
+  name: "userhome",
+  props: ['userID']
+}
+</script>

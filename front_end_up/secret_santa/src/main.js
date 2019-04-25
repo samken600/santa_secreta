@@ -7,8 +7,15 @@ Vue.use(VueRouter);
 const Log = { template: "<div><h1>CRAZY Log</h1></div>" };
 
 const routes = [
-  { path: "/", component: Login },
-  { path: "/log", component: UserHome }
+  { 
+    path: "/", 
+    component: Login },
+  { 
+    path: "/home",
+    component: UserHome, 
+    name: 'home',
+    props: true
+  }
 ];
 
 const router = new VueRouter({
@@ -17,5 +24,8 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-  router
+  router,
+  data: {
+    userID: null
+  }
 }).$mount("#app");

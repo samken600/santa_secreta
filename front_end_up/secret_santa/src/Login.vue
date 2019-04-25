@@ -6,7 +6,7 @@
       <input type="text" id="email">
       <label for="username">Username</label>
       <input type="text" id="username">
-      <button id="submit-button" v-on:click="submit_stuff">Log in</button>
+      <button id="submit-button" v-on:click="submit">Log in</button>
     </div>
   </div>
 </template>
@@ -32,21 +32,21 @@ export default {
   data() {
     return {
       greeting: "Log in to Secret Santa",
-      userID: ""
+      userID: null
     };
   },
   methods: {
-    submit_stuff: function() {
+    submit: function() {
       let InputEmail = document.getElementById("email").value;
       let InputUsername = document.getElementById("username").value;
 
       let login = functions.httpsCallable("login");
 
       login({ email: InputEmail, username: InputUsername })
-        .then(result => {
+        .then((result) => {
           this.userID = result["data"]; //this is the returned userID
           console.log(this.userID);
-          if (result != null) this.$router.push("log");
+          if (result != null) this.$router.push({name: "home", params: {userID: this.userID}});
         })
         .catch(function(error) {
           console.error("Error!");
