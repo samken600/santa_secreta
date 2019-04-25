@@ -1,15 +1,13 @@
 <template>
-  <div v-if="!loggedIn" id="login">
+  <div id="login">
     <h1 class="greeting">{{greeting}}</h1>
-    <form id="login">
+    <div id="login">
       <label for="email">Email</label>
-      <input type="text" id="email" name="user-email">
+      <input type="text" id="email">
       <label for="username">Username</label>
-      <input type="text" id="username" name="user-username">
-      <!-- <router-link to="/log"> -->
-      <input type="submit" id="submit-button" value="Log in" @click="submit">
-      <!-- </router-link> -->
-    </form>
+      <input type="text" id="username">
+      <button id="submit-button" v-on:click="submit_stuff">Log in</button>
+    </div>
   </div>
 </template>
 
@@ -33,25 +31,21 @@ export default {
   data() {
     return {
       greeting: "Log in to Secret Santa",
-      debug: true,
-      loggedIn: false,
-      userID: "empty"
+      userID: ""
     };
   },
   methods: {
-    inc: function() {
-      this.value++;
-    },
-    submit: function() {
-      let uemail = document.getElementById("email").value;
-      let uusername = document.getElementById("username").value;
+    submit_stuff: function() {
+      let InputEmail = document.getElementById("email").value;
+      let InputUsername = document.getElementById("username").value;
 
       let login = functions.httpsCallable("login");
-      login({ email: uemail, username: uusername })
-        .then((result) => {
-          console.log(result);
-		  this.userID = result;
-		  if(result != null) this.$router.push("log");
+
+      login({ email: InputEmail, username: InputUsername })
+        .then(result => {
+          this.userID = result["data"]; //this is the returned userID
+          console.log(this.userID);
+          if (result != null) this.$router.push("log");
         })
         .catch(function(error) {
           console.error(error);
