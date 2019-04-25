@@ -35,7 +35,7 @@ export default {
   methods:{
     add: function(){
       console.log(this.userID);
-      this.ShowList = !this.ShowList;
+      this.RealList.push({name: 'Fun List', persons: ['sam', 'mike', 'ala']})
       //use this function to to add to list
     }
   },
