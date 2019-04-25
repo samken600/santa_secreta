@@ -25,6 +25,7 @@ let config = {
 
 firebase.initializeApp(config);
 let functions = firebase.app().functions("europe-west1");
+let login = functions.httpsCallable("login");
 
 export default {
   name: "login",
@@ -48,6 +49,7 @@ export default {
           if (result != null) this.$router.push("log");
         })
         .catch(function(error) {
+          console.error("Error!");
           console.error(error);
         });
     }
