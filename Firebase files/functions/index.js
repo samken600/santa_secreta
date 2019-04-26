@@ -204,15 +204,83 @@ exports.get_listIds = functions.region('europe-west1').https.onCall(async (data,
 
 });
 
-/*
-exports.add_person = functions.region('europe-west1').https.onCall(async (data, context) => {
 
+exports.add_person = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const person = data.person;
+    const listId = data.listId;
+
+    const lists = db.collection('lists');
+
+    try {
+
+        return await lists.doc(listId).update({
+            persons: firebase.firestore.FieldValue.arrayUnion(person)
+        }).then(function () {
+            console.log("Added person: ", person);
+            return true;
+        }).catch(function (error) {
+            console.error("Error adding person to list: ", error);
+            return null;
+        });
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 });
+
 
 exports.remove_person = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const person = data.person;
+    const listId = data.listId;
 
+    const lists = db.collection('lists');
+
+    try {
+
+        return await lists.doc(listId).update({
+            persons: firebase.firestore.FieldValue.arrayRemove(person)
+        }).then(function () {
+            console.log("Added person: ", person);
+            return true;
+        }).catch(function (error) {
+            console.error("Error adding person to list: ", error);
+            return null;
+        });
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 });
 
+exports.get_list = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const listId = data.listId;
+
+    const lists = db.collection('lists');
+
+    let list = [];
+
+    try {
+
+        return lists.doc(listId).get().then(async function (doc) {
+            console.log("Got document: ", doc.data());
+            doc.data().persons.forEach(function (person) {
+                list.push(person);
+            });
+            return shuffle(list);
+        }).catch(function (error) {
+            console.error("Error fetching document: ", error);
+            return null;
+        });
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+});
+
+/*
 
 Everyone in list must be unique (unique name)
 
