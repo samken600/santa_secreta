@@ -25,7 +25,6 @@ const router = new VueRouter({
 const app = new Vue({
   router,
   data: {
-    userID: null,
-    unique: "string"
+    userID: null
   }
 }).$mount("#app");

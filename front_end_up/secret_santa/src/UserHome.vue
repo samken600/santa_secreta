@@ -4,7 +4,7 @@
     <p>{{userID}}</p>
     <div class="list" v-if="ShowList == false" v-for="list in RealList" :key="list.name">
       <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
-      <p class="ListPerson" v-for="person in list.persons" :key="person">{{person}}</p>
+      <p class="ListPerson" v-for="tperson in list.persons" :key="tperson">{{tperson}}</p>
     </div>
     <div class="list" v-if="ShowList == false" v-for="ListId in ListIds" :key="ListId">
       <h3 class="ListTitle">{{getListTitle(ListId)}}</h3>
@@ -14,9 +14,10 @@
       <label for="templistname">List name</label>
       <input type="text" id="templistname" contenteditable="true">
       <label for="tempnames">Names</label>
-      <input type="text" id="tempnames" contenteditable="ture">
+      <input type="text" id="tempnames" contenteditable="true">
     </div>
-    <button id="add" v-on:click="add">{{ButtonState()}}</button>
+    <button id="CreateNewList" v-on:click="CreateNewList">{{ButtonState()}}</button>
+    <button id="detele button" v-on:click="DeleteCookies()">Delete Cookies</button>
   </div>
 </template>
 
@@ -62,7 +63,13 @@ export default {
     get_listIds({ userId: this.userID })
       .then(result => {
         console.log(result);
-        this.ListIds = result["data"];
+        if ($cookies.isKey("UserListIds")) $cookies.remove("UserListIds");
+        $cookies.set("UserListIds", result["data"], "60s");
+        if ($cookies.isKey("UserListIds")) {
+          this.ListIds = $cookies.get("UserListIds");
+          //calling $cookies.get() produces the Vue warn
+          //vue.esm.js?efeb:628 [Vue warn]: Duplicate keys detected: 'l'. This may cause an update error.
+        }
       })
       .catch(function(error) {
         console.error("Error!");
@@ -70,21 +77,16 @@ export default {
       });
   },
   methods: {
-    add: function() {
-      console.log(this.userID);
-      /*this.RealList.push({
-        name: "List name",
-        persons: ["sam", "mike", "ala"]
-      });*/
+    CreateNewList: function() {
       if (
         this.ShowList == true &&
         document.getElementById("templistname").value != ""
       ) {
+        //remove this push when testing is complete
         this.RealList.push({
           name: document.getElementById("templistname").value,
           persons: document.getElementById("tempnames").value.split(" ")
         });
-
         create_list({
           userId: this.userID,
           people: document.getElementById("tempnames").value.split(" "),
@@ -100,20 +102,28 @@ export default {
           });
       }
       this.ShowList = !this.ShowList;
-      //use this function to to add to list
+      //use this function to to CreateNewList to list
     },
     debug: function() {
       console.log("debug");
     },
     getListTitle: ListId => {
       return "Title";
+      //return the list title from database
     },
     getListNames: ListId => {
       return ["name1", "name2", "name3"];
+      //return persons from database
     },
     ButtonState: function() {
       if (this.ShowList) return "Save";
       else return "Create List";
+    },
+    DeleteCookies: function() {
+      let cookies = $cookies.keys();
+      for (let cookie in cookies) {
+        $cookies.remove(cookie);
+      }
     }
   },
   props: ["userID", "username"]
