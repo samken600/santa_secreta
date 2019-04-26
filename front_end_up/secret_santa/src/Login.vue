@@ -12,6 +12,8 @@
 </template>
 
 <script>
+// import firebase from "firebase";
+
 import firebase from "firebase";
 
 let config = {
@@ -40,13 +42,15 @@ export default {
       let InputEmail = document.getElementById("email").value;
       let InputUsername = document.getElementById("username").value;
 
-      let login = functions.httpsCallable("login");
-
       login({ email: InputEmail, username: InputUsername })
-        .then((result) => {
+        .then(result => {
           this.userID = result["data"]; //this is the returned userID
           console.log(this.userID);
-          if (result != null) this.$router.push({name: "home", params: {userID: this.userID, username: InputUsername}});
+          if (result != null)
+            this.$router.push({
+              name: "home",
+              params: { userID: this.userID, username: InputUsername }
+            });
         })
         .catch(function(error) {
           console.error("Error!");

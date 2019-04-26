@@ -5,17 +5,22 @@ body {
   width: 100%;
   box-sizing: border-box;
   border-style: solid;
-  border-color: blue;
+  border-radius: 5px;
+  border-color: grey;
+  margin-bottom: 5px;
   background-color: white;
 }
 .ListTitle {
   padding-left: 10px;
   width: 100%;
+  padding-bottom: 0px;
+  font-size: 15pt;
 }
 .ListPerson {
-  color: green;
+  color: red;
   display: inline;
   padding-left: 10px;
+  font-size: 10pt;
 }
 #login {
   background: white;
