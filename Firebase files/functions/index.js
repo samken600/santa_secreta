@@ -139,14 +139,16 @@ exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (da
     try {
         let list = lists.doc(listId);
         let persons = [];
-        list.get().then(async function (doc) {
+        return list.get().then(async function (doc) {
             if(doc.exists) {
-                console.log("Document exists, data: ", doc.data);
-                persons = shuffle(doc.data.persons);
+                console.log("Document exists, data: ", doc.data());
+                persons = doc.data().persons;
+                persons = shuffle(persons);
 
                 await lists.doc(listId).update({
                     persons: persons
                 });
+                return true;
 
             } else {
                 console.log("No such document!");
@@ -155,8 +157,45 @@ exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (da
         }).catch(function (error) {
             console.error("Error getting document: ", error);
             return null;
-        })
+        });
 
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+});
+
+
+exports.get_listIds = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const userId = data.userId;
+
+    const users = db.collection('users');
+
+    try {
+        let user = users.doc(userId);
+        let listIds = [];
+        return user.get().then(async function (doc) {
+            if(doc.exists) {
+                console.log("Document exists, data: ", doc.data());
+
+                let lists = doc.data().lists;
+
+                lists.forEach(function (ref) {
+                    listIds.push(ref.id);
+                });
+
+                return listIds;
+
+
+            } else {
+                console.log("No such document!");
+                return false;
+            }
+        }).catch(function (error) {
+            console.error("Error getting document: ", error);
+            return null;
+        });
 
     } catch (e) {
         console.error(e);
@@ -166,10 +205,6 @@ exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (da
 });
 
 /*
-exports.get_list = functions.region('europe-west1').https.onCall(async (data, context) => {
-
-});
-
 exports.add_person = functions.region('europe-west1').https.onCall(async (data, context) => {
 
 });
@@ -180,4 +215,5 @@ exports.remove_person = functions.region('europe-west1').https.onCall(async (dat
 
 
 Everyone in list must be unique (unique name)
+
 */
