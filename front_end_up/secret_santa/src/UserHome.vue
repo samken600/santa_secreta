@@ -2,9 +2,13 @@
   <div>
     <h1>{{username}}'s Home</h1>
     <p>{{userID}}</p>
-    <div id="list" v-if="ShowList == false" v-for="list in RealList" :key="list.name">
+    <div class="list" v-if="ShowList == false" v-for="list in RealList" :key="list.name">
       <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
       <p class="ListPerson" v-for="person in list.persons" :key="person">{{person}}</p>
+    </div>
+    <div class="list" v-if="ShowList == false" v-for="ListId in ListIds" :key="ListId">
+      <h3 class="ListTitle">{{getListTitle(ListId)}}</h3>
+      <p class="ListPerson" v-for="person in getListNames(ListId)" :key="person">{{person}}</p>
     </div>
     <div v-if="ShowList == true">
       <label for="templistname">List name</label>
@@ -29,6 +33,7 @@ let config = {
 firebase.initializeApp(config);
 let functions = firebase.app().functions("europe-west1");
 let create_list = functions.httpsCallable("create_list");
+let get_listIds = functions.httpsCallable("get_listIds");
 
 export default {
   name: "userhome",
@@ -49,8 +54,20 @@ export default {
         }
       ],
       ShowList: false,
-      PresentList: "THIS LIST"
+      ListIds: []
     };
+  },
+  created() {
+    console.log("Created Vue instance");
+    get_listIds({ userId: this.userID })
+      .then(result => {
+        console.log(result);
+        this.ListIds = result["data"];
+      })
+      .catch(function(error) {
+        console.error("Error!");
+        console.error(error);
+      });
   },
   methods: {
     add: function() {
@@ -87,6 +104,12 @@ export default {
     },
     debug: function() {
       console.log("debug");
+    },
+    getListTitle: ListId => {
+      return "Title";
+    },
+    getListNames: ListId => {
+      return ["name1", "name2", "name3"];
     },
     ButtonState: function() {
       if (this.ShowList) return "Save";

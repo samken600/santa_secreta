@@ -1,7 +1,7 @@
 body {
   background: #8d0707;
 }
-#list {
+.list {
   width: 90%;
   margin: auto;
   box-sizing: border-box;
@@ -11,7 +11,7 @@ body {
   margin-bottom: 5px;
   background-color: white;
 }
-#list:hover {
+.list:hover {
   background-color: green;
   -webkit-animation: pulse 0.3s linear;
 }
