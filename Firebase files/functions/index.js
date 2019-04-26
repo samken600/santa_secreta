@@ -268,7 +268,10 @@ exports.get_list = functions.region('europe-west1').https.onCall(async (data, co
             doc.data().persons.forEach(function (person) {
                 list.push(person);
             });
-            return shuffle(list);
+            return {
+                list: shuffle(list),
+                name: doc.data().name
+            };
         }).catch(function (error) {
             console.error("Error fetching document: ", error);
             return null;
