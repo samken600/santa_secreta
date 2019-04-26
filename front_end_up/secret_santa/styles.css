@@ -1,14 +1,30 @@
 body {
-  background: #d3d3d3;
+  background: #8d0707;
 }
 #list {
-  width: 100%;
+  width: 90%;
+  margin: auto;
   box-sizing: border-box;
   border-style: solid;
   border-radius: 5px;
   border-color: grey;
   margin-bottom: 5px;
   background-color: white;
+}
+#list:hover {
+  background-color: green;
+  -webkit-animation: pulse 0.3s linear;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.11);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
 }
 .ListTitle {
   padding-left: 10px;
@@ -23,20 +39,21 @@ body {
   font-size: 10pt;
 }
 #login {
-  background: white;
+  background: rgb(182, 37, 37);
   margin: auto;
   margin-top: 100px 10px;
   width: 80%;
+  max-width: 400px;
   display: block;
   border-style: solid;
   border-radius: 10px;
   padding: 15px;
-  border-color: black;
+  border-color: white;
 }
 
 .greeting {
   text-align: center;
-  color: #4d4e4f;
+  color: white;
 }
 
 input[type="text"] {
@@ -46,8 +63,9 @@ input[type="text"] {
   box-sizing: border-box;
   border-style: solid;
   border-radius: 6px;
+  color: white;
   border-color: grey;
-  background-color: azure;
+  background-color: rgb(16, 88, 28);
 }
 label {
   color: grey;
@@ -58,9 +76,9 @@ button {
   border-radius: 6px;
   margin: 8px 0px;
   padding: 5px;
-  border-color: grey;
+  border-color: white;
   border-style: solid;
-  background-color: azure;
+  background-color: rgb(15, 136, 65);
   width: 21%;
   font-size: 16px;
   color: #4d4e4f;
