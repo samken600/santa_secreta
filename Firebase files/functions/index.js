@@ -86,7 +86,7 @@ exports.create_list = functions.region('europe-west1').https.onCall(async (data,
         });
 
         await users.doc(userId).update({
-            lists: firebase.firestore.FieldValue.arrayUnion(doc.id)
+            lists: firebase.firestore.FieldValue.arrayUnion(db.doc("/lists/" + doc.id))
         });
 
         return doc.id;
@@ -107,17 +107,21 @@ exports.delete_list = functions.region('europe-west1').https.onCall(async (data,
     try {
         await lists.doc(listId).delete().then(function () {
             console.log("List deleted from database");
+            return null;
         }).catch(function (error) {
             console.error("Error removing list: ", error);
-        })
+        });
 
         await users.doc(userId).update({
-            lists: firebase.firestore.FieldValue.arrayRemove(listId)
+            lists: firebase.firestore.FieldValue.arrayRemove(db.doc("/lists/" + listId))
         }).then(function () {
-            console.log("List reference removed from user")
+            console.log("List reference removed from user");
+            return null;
         }).catch(function (error) {
             console.error("Error removing list reference: ", error);
         });
+
+        return true;
 
     } catch (e) {
         console.error(e);
@@ -127,11 +131,41 @@ exports.delete_list = functions.region('europe-west1').https.onCall(async (data,
 
 });
 
-/*
 exports.reshuffle_list = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const listId = data.listId;
+
+    const lists = db.collection('lists');
+
+    try {
+        let list = lists.doc(listId);
+        let persons = [];
+        list.get().then(async function (doc) {
+            if(doc.exists) {
+                console.log("Document exists, data: ", doc.data);
+                persons = shuffle(doc.data.persons);
+
+                await lists.doc(listId).update({
+                    persons: persons
+                });
+
+            } else {
+                console.log("No such document!");
+                return false;
+            }
+        }).catch(function (error) {
+            console.error("Error getting document: ", error);
+            return null;
+        })
+
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 
 });
 
+/*
 exports.get_list = functions.region('europe-west1').https.onCall(async (data, context) => {
 
 });
