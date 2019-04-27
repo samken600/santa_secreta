@@ -37,6 +37,9 @@ export default {
       userID: null
     };
   },
+  created() {
+    // do something to do with cookies such that if cookie exists, redirect to /home
+  },
   methods: {
     submit: function() {
       let InputEmail = document.getElementById("email").value;
@@ -46,7 +49,7 @@ export default {
         .then(result => {
           this.userID = result["data"]; //this is the returned userID
           console.log(this.userID);
-          $cookies.set("UserId", result["data"], "300s");
+          $cookies.set("UserId", result["data"], "0");
           if (result != null)
             this.$router.push({
               name: "home",
