@@ -47,6 +47,7 @@ export default {
       .then(result => {
         console.log(result);
         result.data.forEach(id => {
+          this.ListIds.push(id);
           let data = get_list({ listId: id })
             .then(list => {
               console.log("List ", list);
