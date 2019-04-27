@@ -7,7 +7,6 @@
         <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
         <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
       </div>
-
     </div>
     <div v-if="ShowList == true">
       <label for="templistname">List name</label>
@@ -21,8 +20,7 @@
 </template>
 
 <script>
-
-import functions from './firebaseConfig'
+import functions from "./firebaseConfig";
 
 let create_list = functions.httpsCallable("create_list");
 let get_listIds = functions.httpsCallable("get_listIds");
@@ -48,36 +46,31 @@ export default {
       ],
       ShowList: false,
       Lists: [],
+      USERID: $cookies.get("UserId"),
       ListIds: []
     };
   },
   created() {
     console.log("Created Vue instance");
-    get_listIds({ userId: this.userID })
+    get_listIds({ userId: this.USERID })
       .then(result => {
         console.log(result);
-        // if ($cookies.isKey("UserListIds")) $cookies.remove("UserListIds");
-        // $cookies.set("UserListIds", result["data"], "60s");
-        // if ($cookies.isKey("UserListIds")) {
-        //   this.ListIds = $cookies.get("UserListIds");
-        //calling $cookies.get() produces the Vue warn
-        //vue.esm.js?efeb:628 [Vue warn]: Duplicate keys detected: 'l'. This may cause an update error.
+        result.data.forEach(id => {
+          let data = get_list({ listId: id })
+            .then(list => {
+              console.log("List ", list);
+              this.Lists.push(list.data);
+              return list.data;
+            })
+            .catch(function(error) {
+              console.error(error);
+              return null;
+            });
 
-        result.data.forEach((id) => {
-          let data = get_list({listId: id}).then((list) => {
-            console.log("List ", list);
-            this.Lists.push(list.data);
-            return list.data;
-          }).catch(function(error) {
-            console.error(error);
-            return null;
-          });
-
-          
           console.log("Here ", data);
         });
-
-      }).catch(function(error) {
+      })
+      .catch(function(error) {
         console.error(error);
       });
   },

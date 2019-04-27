@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 // import firebase from "firebase";
 
 // let config = {
@@ -26,7 +25,7 @@
 
 // firebase.initializeApp(config);
 
-import functions from './firebaseConfig'
+import functions from "./firebaseConfig";
 
 let login = functions.httpsCallable("login");
 
@@ -47,6 +46,7 @@ export default {
         .then(result => {
           this.userID = result["data"]; //this is the returned userID
           console.log(this.userID);
+          $cookies.set("UserId", result["data"], "300s");
           if (result != null)
             this.$router.push({
               name: "home",
