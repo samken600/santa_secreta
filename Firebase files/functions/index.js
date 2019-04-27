@@ -283,6 +283,32 @@ exports.get_list = functions.region('europe-west1').https.onCall(async (data, co
     }
 });
 
+
+exports.get_user = functions.region('europe-west1').https.onCall(async (data, context) => {
+    const userId = data.userId;
+
+    const users = db.collection('users');
+
+
+    try {
+
+        return users.doc(userId).get().then(function (doc) {
+            console.log("Got document: ", doc.data());
+
+            return {
+                email: doc.data().email,
+                username: doc.data().username
+            };
+        }).catch(function (error) {
+            console.error("Error fetching document: ", error);
+            return null;
+        });
+
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+});
 /*
 
 Everyone in list must be unique (unique name)
