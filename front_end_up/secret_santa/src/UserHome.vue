@@ -3,7 +3,12 @@
     <h1>{{username}}'s Home</h1>
     <p>{{userID}}</p>
     <div v-if="ShowList == false">
-      <div class="list" v-for="list in Lists" :key="list.name">
+      <div
+        class="list"
+        v-for="list in Lists"
+        :key="list.name"
+        @click="ViewList(list.name, list.list)"
+      >
         <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
         <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
       </div>
@@ -99,6 +104,10 @@ export default {
         $cookies.remove(cookie);
       }
       console.log(this.Lists);
+    },
+    ViewList: function(name, persons) {
+      console.log("List name: " + name);
+      console.log("List persons: " + persons);
     }
   },
   props: ["userID", "username"]
