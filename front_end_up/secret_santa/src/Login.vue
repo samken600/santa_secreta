@@ -39,6 +39,12 @@ export default {
   },
   created() {
     // do something to do with cookies such that if cookie exists, redirect to /home
+    if ($cookies.isKey("UserId")) {
+      this.$router.push({
+        name: "home"
+      });
+      console.log("Cookie exists");
+    }
   },
   methods: {
     submit: function() {
