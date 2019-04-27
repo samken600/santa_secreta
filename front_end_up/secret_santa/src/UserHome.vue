@@ -30,20 +30,6 @@ export default {
   name: "userhome",
   data() {
     return {
-      RealList: [
-        { name: "Fun List", persons: ["sam", "mike", "ala"] },
-        { name: "Bad list", persons: ["sam1", "sam2"] },
-        {
-          name: "awesome list",
-          persons: [
-            "jacob",
-            "jacob's friend",
-            "jacob's other friend",
-            "steve",
-            "pikachu"
-          ]
-        }
-      ],
       ShowList: false,
       Lists: [],
       USERID: $cookies.get("UserId"),
@@ -51,7 +37,7 @@ export default {
     };
   },
   created() {
-    console.log("Created Vue instance");
+    console.log("Created UserHome instance");
     get_listIds({ userId: this.USERID })
       .then(result => {
         console.log(result);
@@ -81,10 +67,10 @@ export default {
         document.getElementById("templistname").value != ""
       ) {
         //remove this push when testing is complete
-        this.RealList.push({
+        /*this.RealList.push({
           name: document.getElementById("templistname").value,
           persons: document.getElementById("tempnames").value.split(" ")
-        });
+        });*/
         create_list({
           userId: this.userID,
           people: document.getElementById("tempnames").value.split(" "),
