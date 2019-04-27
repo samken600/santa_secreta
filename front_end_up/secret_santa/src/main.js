@@ -25,7 +25,4 @@ const router = new VueRouter({
 
 const app = new Vue({
   router,
-  data: {
-    userID: null
-  }
 }).$mount("#app");

@@ -2,13 +2,12 @@
   <div>
     <h1>{{username}}'s Home</h1>
     <p>{{userID}}</p>
-    <div class="list" v-if="ShowList == false" v-for="list in RealList" :key="list.name">
-      <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
-      <p class="ListPerson" v-for="tperson in list.persons" :key="tperson">{{tperson}}</p>
-    </div>
-    <div class="list" v-if="ShowList == false" v-for="ListId in ListIds" :key="ListId">
-      <h3 class="ListTitle">{{getListTitle(ListId)}}</h3>
-      <p class="ListPerson" v-for="person in getListNames(ListId)" :key="person">{{person}}</p>
+    <div v-if="ShowList == false">
+      <div class="list" v-for="list in Lists" :key="list.name">
+        <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
+        <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
+      </div>
+
     </div>
     <div v-if="ShowList == true">
       <label for="templistname">List name</label>
@@ -27,6 +26,7 @@ import functions from './firebaseConfig'
 
 let create_list = functions.httpsCallable("create_list");
 let get_listIds = functions.httpsCallable("get_listIds");
+let get_list = functions.httpsCallable("get_list");
 
 export default {
   name: "userhome",
@@ -47,6 +47,7 @@ export default {
         }
       ],
       ShowList: false,
+      Lists: [],
       ListIds: []
     };
   },
@@ -55,16 +56,28 @@ export default {
     get_listIds({ userId: this.userID })
       .then(result => {
         console.log(result);
-        if ($cookies.isKey("UserListIds")) $cookies.remove("UserListIds");
-        $cookies.set("UserListIds", result["data"], "60s");
-        if ($cookies.isKey("UserListIds")) {
-          this.ListIds = $cookies.get("UserListIds");
-          //calling $cookies.get() produces the Vue warn
-          //vue.esm.js?efeb:628 [Vue warn]: Duplicate keys detected: 'l'. This may cause an update error.
-        }
-      })
-      .catch(function(error) {
-        console.error("Error!");
+        // if ($cookies.isKey("UserListIds")) $cookies.remove("UserListIds");
+        // $cookies.set("UserListIds", result["data"], "60s");
+        // if ($cookies.isKey("UserListIds")) {
+        //   this.ListIds = $cookies.get("UserListIds");
+        //calling $cookies.get() produces the Vue warn
+        //vue.esm.js?efeb:628 [Vue warn]: Duplicate keys detected: 'l'. This may cause an update error.
+
+        result.data.forEach((id) => {
+          let data = get_list({listId: id}).then((list) => {
+            console.log("List ", list);
+            this.Lists.push(list.data);
+            return list.data;
+          }).catch(function(error) {
+            console.error(error);
+            return null;
+          });
+
+          
+          console.log("Here ", data);
+        });
+
+      }).catch(function(error) {
         console.error(error);
       });
   },
@@ -96,17 +109,6 @@ export default {
       this.ShowList = !this.ShowList;
       //use this function to to CreateNewList to list
     },
-    debug: function() {
-      console.log("debug");
-    },
-    getListTitle: ListId => {
-      return "Title";
-      //return the list title from database
-    },
-    getListNames: ListId => {
-      return ["name1", "name2", "name3"];
-      //return persons from database
-    },
     ButtonState: function() {
       if (this.ShowList) return "Save";
       else return "Create List";
@@ -116,6 +118,7 @@ export default {
       for (let cookie in cookies) {
         $cookies.remove(cookie);
       }
+      console.log(this.Lists);
     }
   },
   props: ["userID", "username"]
