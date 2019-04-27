@@ -8,6 +8,15 @@
         <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
       </div>
     </div>
+    <div v-if="ShowList == false">
+      <div v-for="id in tlistid" :key="id">
+        <h3 id="ones">{{ id }}</h3>
+      </div>
+      <div class="list" v-for="list in Lists" :key="list.name">
+        <h3 class="ListTitle" contenteditable="true">{{list.name}}</h3>
+        <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
+      </div>
+    </div>
     <div v-if="ShowList == true">
       <label for="templistname">List name</label>
       <input type="text" id="templistname" contenteditable="true">
@@ -33,12 +42,16 @@ export default {
       ShowList: false,
       Lists: [],
       USERID: $cookies.get("UserId"),
-      ListIds: []
+      ListIds: [],
+      tlistid: [],
+      tlistdata: []
     };
   },
   created() {
     console.log("Created UserHome instance");
-    get_listIds({ userId: this.USERID })
+    this.tlistid = await this.ReadListIds();
+    console.log(this.tlistid);
+    /*get_listIds({ userId: this.USERID })
       .then(result => {
         console.log(result);
         result.data.forEach(id => {
@@ -58,21 +71,22 @@ export default {
       })
       .catch(function(error) {
         console.error(error);
-      });
+      });*/
   },
+  /*updated: async function() {
+    if (this.tlistid.length > 0) {
+      this.SetListId();
+      console.log("Mounted");
+    }
+  },*/
   methods: {
     CreateNewList: function() {
       if (
         this.ShowList == true &&
         document.getElementById("templistname").value != ""
       ) {
-        //remove this push when testing is complete
-        /*this.RealList.push({
-          name: document.getElementById("templistname").value,
-          persons: document.getElementById("tempnames").value.split(" ")
-        });*/
         create_list({
-          userId: this.userID,
+          userId: this.USERID,
           people: document.getElementById("tempnames").value.split(" "),
           name: document.getElementById("templistname").value
         })
@@ -98,6 +112,21 @@ export default {
         $cookies.remove(cookie);
       }
       console.log(this.Lists);
+    },
+    ReadListIds: async function() {
+      let ids = await this.UpdateListIds({ userId: "ebs1aBzAT0bkYiwzJsvV" });
+      return ids["data"];
+    },
+    UpdateListIds: async function(data) {
+      return await get_listIds({ userId: data.userId });
+    },
+    ReturnTitle: async function(id) {
+      let data = await get_list({ listId: id });
+      return await "here";
+    },
+    SetListId: async function() {
+      let ids = await this.UpdateListIds({ userId: "ebs1aBzAT0bkYiwzJsvV" });
+      this.tlistid = await ids["data"];
     }
   },
   props: ["userID", "username"]

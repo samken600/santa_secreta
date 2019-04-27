@@ -2,7 +2,6 @@ import Vue from "vue";
 import Login from "./Login.vue";
 import UserHome from "./UserHome.vue";
 import VueRouter from "vue-router";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -24,5 +23,5 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-  router,
+  router
 }).$mount("#app");
