@@ -2,7 +2,7 @@
   <div>
     <h1>{{username}}'s Home</h1>
     <p>{{userID}}</p>
-    <div id='ShowAllListView' v-if="ShowList == false">
+    <div id="ShowAllListView" v-if="ShowList == false">
       <div
         class="list"
         v-for="list in Lists"
@@ -13,7 +13,7 @@
         <p class="ListPerson" v-for="person in list.list" :key="person">{{person}}</p>
       </div>
     </div>
-    <div id='AddList-View' v-if="ShowList == true">
+    <div id="AddList-View" v-if="ShowList == true">
       <label for="templistname">List name</label>
       <input type="text" id="templistname" contenteditable="true">
       <label for="tempnames">Names</label>
@@ -109,6 +109,10 @@ export default {
     ViewList: function(name, persons) {
       console.log("List name: " + name);
       console.log("List persons: " + persons);
+      this.$router.push({
+        name: "list-view",
+        params: { ListName: name, Persons: persons }
+      });
     }
   },
   props: ["userID", "username"]
