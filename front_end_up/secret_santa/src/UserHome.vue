@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>{{username}}'s Home</h1>
-    <p>{{userID}}</p>
+    <h1>{{USERNAME}}'s Home</h1>
     <div id="ShowAllListView" v-if="ShowList == false">
       <div
         class="list"
@@ -30,6 +29,7 @@ import functions from "./firebaseConfig";
 let create_list = functions.httpsCallable("create_list");
 let get_listIds = functions.httpsCallable("get_listIds");
 let get_list = functions.httpsCallable("get_list");
+let get_user = functions.httpsCallable("get_user");
 
 export default {
   name: "userhome",
@@ -38,6 +38,7 @@ export default {
       ShowList: false,
       Lists: [],
       USERID: $cookies.get("UserId"),
+      USERNAME: "",
       ListIds: []
     };
   },
@@ -61,6 +62,16 @@ export default {
 
           console.log("Here ", data);
         });
+      })
+      .catch(function(error) {
+        console.error(error);
+        return null;
+      });
+    get_user({ userId: $cookies.get("UserId") })
+      .then(result => {
+        console.log(result);
+        console.log(result.data.username);
+        this.USERNAME = result.data.username;
       })
       .catch(function(error) {
         console.error(error);
