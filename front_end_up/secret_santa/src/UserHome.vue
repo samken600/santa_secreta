@@ -89,8 +89,9 @@ export default {
           name: document.getElementById("templistname").value,
           persons: document.getElementById("tempnames").value.split(" ")
         });*/
+
         create_list({
-          userId: this.userID,
+          userId: this.USERID,
           people: document.getElementById("tempnames").value.split(" "),
           name: document.getElementById("templistname").value
         })
