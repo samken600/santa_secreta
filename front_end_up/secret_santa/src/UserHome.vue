@@ -19,7 +19,8 @@
       <input type="text" id="tempnames" contenteditable="true">
     </div>
     <button id="CreateNewList" v-on:click="CreateNewList">{{ButtonState()}}</button>
-    <button id="detele button" v-on:click="DeleteCookies()">Delete Cookies</button>
+    <button id="delete_cookie" v-on:click="DeleteCookies()">Delete Cookies</button>
+    <button id="Logout" v-on:click="Logout()">Logout</button>
   </div>
 </template>
 
@@ -123,6 +124,7 @@ export default {
       console.log(this.Lists);
     },
     Logout: function() {
+      this.DeleteCookies();
       this.$router.push({
         name: "login"
       });
