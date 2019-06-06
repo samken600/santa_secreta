@@ -79,9 +79,7 @@ export default {
           return null;
         });
     } else {
-      this.$router.push({
-        name: "login"
-      });
+      this.Logout();
     }
   },
   methods: {
@@ -125,6 +123,11 @@ export default {
       $cookies.remove("UserId");
 
       console.log(this.Lists);
+    },
+    Logout: function() {
+      this.$router.push({
+        name: "login"
+      });
     },
     ViewList: function(name, persons) {
       console.log("List name: " + name);
