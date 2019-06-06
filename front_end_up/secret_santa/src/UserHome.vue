@@ -60,8 +60,6 @@ export default {
                 console.error(error);
                 return null;
               });
-
-            console.log("Here ", data);
           });
         })
         .catch(function(error) {
