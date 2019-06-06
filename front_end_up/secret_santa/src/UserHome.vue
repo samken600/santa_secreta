@@ -44,46 +44,55 @@ export default {
   },
   created() {
     console.log("Created UserHome instance");
-    get_listIds({ userId: this.USERID })
-      .then(result => {
-        console.log(result);
-        result.data.forEach(id => {
-          this.ListIds.push(id);
-          let data = get_list({ listId: id })
-            .then(list => {
-              console.log("List ", list);
-              this.Lists.push(list.data);
-              return list.data;
-            })
-            .catch(function(error) {
-              console.error(error);
-              return null;
-            });
+    if ($cookies.isKey("UserId")) {
+      get_listIds({ userId: this.USERID })
+        .then(result => {
+          console.log(result);
+          result.data.forEach(id => {
+            this.ListIds.push(id);
+            let data = get_list({ listId: id })
+              .then(list => {
+                console.log("List ", list);
+                this.Lists.push(list.data);
+                return list.data;
+              })
+              .catch(function(error) {
+                console.error(error);
+                return null;
+              });
 
-          console.log("Here ", data);
+            console.log("Here ", data);
+          });
+        })
+        .catch(function(error) {
+          console.error(error);
+          return null;
         });
-      })
-      .catch(function(error) {
-        console.error(error);
-        return null;
+      get_user({ userId: $cookies.get("UserId") })
+        .then(result => {
+          console.log(result);
+          console.log(result.data.username);
+          this.USERNAME = result.data.username;
+        })
+        .catch(function(error) {
+          console.error(error);
+          return null;
+        });
+    } else {
+      this.$router.push({
+        name: "login"
       });
-    get_user({ userId: $cookies.get("UserId") })
-      .then(result => {
-        console.log(result);
-        console.log(result.data.username);
-        this.USERNAME = result.data.username;
-      })
-      .catch(function(error) {
-        console.error(error);
-        return null;
-      });
+    }
   },
   methods: {
     CreateNewList: function() {
-      if (
-        this.ShowList == true &&
-        document.getElementById("templistname").value != ""
-      ) {
+      let temp_list;
+      let temp_listname;
+      if (this.ShowList) {
+        temp_list = document.getElementById("tempnames").value.split(" ");
+        temp_listname = document.getElementById("templistname").value;
+      }
+      if (this.ShowList == true && temp_listname != "") {
         //remove this push when testing is complete
         /*this.RealList.push({
           name: document.getElementById("templistname").value,
@@ -92,8 +101,8 @@ export default {
 
         create_list({
           userId: this.USERID,
-          people: document.getElementById("tempnames").value.split(" "),
-          name: document.getElementById("templistname").value
+          people: temp_list,
+          name: temp_listname
         })
           .then(result => {
             this.docID = result["data"]; //this is the returned docID
@@ -103,6 +112,7 @@ export default {
             console.error("Error!");
             console.error(error);
           });
+        this.Lists.push({ name: temp_listname, list: temp_list });
       }
       this.ShowList = !this.ShowList;
       //use this function to to CreateNewList to list
@@ -112,10 +122,8 @@ export default {
       else return "Create List";
     },
     DeleteCookies: function() {
-      let cookies = $cookies.keys();
-      for (let cookie in cookies) {
-        $cookies.remove(cookie);
-      }
+      $cookies.remove("UserId");
+
       console.log(this.Lists);
     },
     ViewList: function(name, persons) {
